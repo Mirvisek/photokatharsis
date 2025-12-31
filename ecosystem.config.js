@@ -3,7 +3,7 @@ module.exports = {
         name: 'photo-katharsis',
         script: 'npm',
         args: 'start',
-        cwd: '/var/www/photo-katharsis',
+        cwd: '/var/www/photokatharsis',
         instances: 1,
         autorestart: true,
         watch: false,
