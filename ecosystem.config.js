@@ -1,9 +1,9 @@
 module.exports = {
     apps: [{
-        name: 'szymon-portfolio',
+        name: 'photo-katharsis',
         script: 'npm',
         args: 'start',
-        cwd: '/var/www/szymon-portfolio',
+        cwd: '/var/www/photo-katharsis',
         instances: 1,
         autorestart: true,
         watch: false,

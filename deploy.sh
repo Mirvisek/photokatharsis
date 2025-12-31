@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# 🚀 Deployment script for Szymon Portfolio
+# 🚀 Deployment script for Photo Katharsis
 # Run this script on VPS after git pull
 
 echo "🚀 Starting deployment..."
 
 # Stop the application
 echo "⏸️  Stopping application..."
-pm2 stop szymon-portfolio
+pm2 stop photo-katharsis
 
 # Install dependencies
 echo "📦 Installing dependencies..."
@@ -34,4 +34,4 @@ pm2 save
 
 echo "✅ Deployment completed successfully!"
 echo "📊 Check status: pm2 status"
-echo "📝 Check logs: pm2 logs szymon-portfolio"
+echo "📝 Check logs: pm2 logs photo-katharsis"
