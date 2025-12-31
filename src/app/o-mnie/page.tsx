@@ -1,0 +1,36 @@
+
+import { Suspense } from 'react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { getSettings } from '@/app/lib/data';
+import AboutClient from '@/components/AboutClient'; // Separate animations
+
+export const dynamic = 'force-dynamic';
+
+export default async function About() {
+    const settings = await getSettings();
+
+    // Default content if not set
+    const content = settings.about_content || `
+        <h2>Moja Historia</h2>
+        <p>
+            Wszystko zaczęło się od starego aparatu, który znalazłem na strychu... (To jest domyślny tekst, edytuj go w panelu administratora).
+        </p>
+        <p>
+            Wierzę, że każde zdjęcie ma swoją duszę, a każda marka kryje historię, którą warto opowiedzieć.
+        </p>
+    `;
+
+    const imageUrl = settings.about_image || "https://placehold.co/800x1200?text=Twoje+Zdjecie";
+
+    return (
+        <main className="min-h-screen bg-white">
+            <Navbar />
+            <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Content Section */}
+                <AboutClient content={content} imageUrl={imageUrl} />
+            </div>
+            <Footer />
+        </main>
+    );
+}
