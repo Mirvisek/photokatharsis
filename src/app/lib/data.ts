@@ -66,12 +66,38 @@ export async function getSettings() {
     }
 }
 
+export async function getSiteSettings() {
+    try {
+        const settings = await prisma.siteSetting.findMany();
+        // Convert array of objects to a single record object
+        return settings.reduce((acc, curr) => {
+            acc[curr.key] = curr.value;
+            return acc;
+        }, {} as Record<string, string>);
+    } catch (error) {
+        console.error('Database Error:', error);
+        return {};
+    }
+}
+
 export async function getHeroSlides() {
     try {
         const slides = await prisma.heroSlide.findMany({
             orderBy: { order: 'asc' },
         });
         return slides;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return [];
+    }
+}
+
+export async function getFAQs() {
+    try {
+        const faqs = await prisma.fAQItem.findMany({
+            orderBy: { createdAt: 'desc' },
+        });
+        return faqs;
     } catch (error) {
         console.error('Database Error:', error);
         return [];

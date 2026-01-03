@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, BriefcaseBusiness } from 'lucide-react';
+import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, BriefcaseBusiness, User, MessageSquare, FileQuestion } from 'lucide-react';
 import { handleSignOut } from '@/app/lib/actions';
 
 export default function Sidebar() {
@@ -12,7 +12,10 @@ export default function Sidebar() {
         { href: '/admin/portfolio', icon: Images, label: 'Portfolio' },
         { href: '/admin/oferta', icon: ShoppingBag, label: 'Oferta' },
         { href: '/admin/settings', icon: Settings, label: 'Ustawienia' },
+        { href: '/admin/messages', icon: MessageSquare, label: 'Wiadomości' },
+        { href: '/admin/faq', icon: FileQuestion, label: 'FAQ' },
         { href: '/admin/clients', icon: BriefcaseBusiness, label: 'Zaufali mi' },
+        { href: '/admin/testimonials', icon: User, label: 'Opinie' },
         { href: '/admin/hero', icon: Images, label: 'Slider Hero' },
     ];
 

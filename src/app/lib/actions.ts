@@ -190,6 +190,42 @@ export async function deleteOffer(id: string) {
     }
 }
 
+export async function createTrustedClient(prevState: any, formData: FormData) {
+    const name = formData.get('name') as string;
+    const logoUrl = formData.get('logoUrl') as string;
+
+    if (!name || !logoUrl) {
+        return { message: 'Missing required fields' };
+    }
+
+    try {
+        await prisma.trustedClient.create({
+            data: {
+                name,
+                logoUrl,
+            },
+        });
+    } catch (error) {
+        return { message: 'Database Error: Failed to Create Client.' };
+    }
+
+    revalidatePath('/o-mnie');
+    revalidatePath('/admin/clients');
+    redirect('/admin/clients');
+}
+
+export async function deleteTrustedClient(id: string) {
+    try {
+        await prisma.trustedClient.delete({
+            where: { id }
+        });
+        revalidatePath('/o-mnie');
+        revalidatePath('/admin/clients');
+    } catch (error) {
+        throw new Error('Database Error: Failed to Delete Client.');
+    }
+}
+
 export async function createHeroSlide(prevState: any, formData: FormData) {
     const title = formData.get('title') as string;
     const subtitle = formData.get('subtitle') as string;
@@ -232,38 +268,122 @@ export async function deleteHeroSlide(id: string) {
     }
 }
 
-export async function createTrustedClient(prevState: any, formData: FormData) {
-    const name = formData.get('name') as string;
-    const logoUrl = formData.get('logoUrl') as string;
 
-    if (!name || !logoUrl) {
+
+export async function createTestimonial(prevState: any, formData: FormData) {
+    const author = formData.get('author') as string;
+    const role = formData.get('role') as string;
+    const content = formData.get('content') as string;
+
+    if (!author || !content) {
         return { message: 'Missing required fields' };
     }
 
     try {
-        await prisma.trustedClient.create({
+        await prisma.testimonial.create({
             data: {
-                name,
-                logoUrl,
+                author,
+                role,
+                content,
             },
         });
     } catch (error) {
-        return { message: 'Database Error: Failed to Create Client.' };
+        return { message: 'Database Error: Failed to Create Testimonial.' };
     }
 
-    revalidatePath('/o-mnie');
-    revalidatePath('/admin/clients');
-    redirect('/admin/clients');
+    revalidatePath('/');
+    revalidatePath('/admin/testimonials');
+    redirect('/admin/testimonials');
 }
 
-export async function deleteTrustedClient(id: string) {
+export async function deleteTestimonial(id: string) {
     try {
-        await prisma.trustedClient.delete({
+        await prisma.testimonial.delete({
             where: { id }
         });
-        revalidatePath('/o-mnie');
-        revalidatePath('/admin/clients');
+        revalidatePath('/');
     } catch (error) {
-        throw new Error('Database Error: Failed to Delete Client.');
+        throw new Error('Database Error: Failed to Delete Testimonial.');
+    }
+}
+
+export async function sendContactMessage(prevState: any, formData: FormData) {
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+
+    if (!name || !email || !message) {
+        return { message: 'Proszę wypełnić wszystkie wymagane pola.' };
+    }
+
+    try {
+        await prisma.contactMessage.create({
+            data: {
+                name,
+                email,
+                subject,
+                message,
+            },
+        });
+        return { message: 'success: Wiadomość została wysłana! Odpowiemy najszybciej jak to możliwe.' };
+    } catch (error) {
+        console.error(error);
+        return { message: 'error: Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.' };
+    }
+}
+
+export async function deleteMessage(id: string) {
+    try {
+        await prisma.contactMessage.delete({ where: { id } });
+        revalidatePath('/admin/messages');
+    } catch (error) {
+        throw new Error('Failed to delete message');
+    }
+}
+
+export async function toggleMessageReadStatus(id: string, currentStatus: boolean) {
+    try {
+        await prisma.contactMessage.update({
+            where: { id },
+            data: { isRead: !currentStatus }
+        });
+        revalidatePath('/admin/messages');
+    } catch (error) {
+        throw new Error('Failed to update message status');
+    }
+}
+
+export async function createFAQ(prevState: any, formData: FormData) {
+    const question = formData.get('question') as string;
+    const answer = formData.get('answer') as string;
+
+    if (!question || !answer) {
+        return { message: 'Missing required fields' };
+    }
+
+    try {
+        await prisma.fAQItem.create({
+            data: {
+                question,
+                answer,
+            },
+        });
+    } catch (error) {
+        return { message: 'Database Error: Failed to Create FAQ.' };
+    }
+
+    revalidatePath('/oferta');
+    revalidatePath('/admin/faq');
+    redirect('/admin/faq');
+}
+
+export async function deleteFAQ(id: string) {
+    try {
+        await prisma.fAQItem.delete({ where: { id } });
+        revalidatePath('/oferta');
+        revalidatePath('/admin/faq');
+    } catch (error) {
+        throw new Error('Failed to delete FAQ');
     }
 }

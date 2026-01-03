@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { getPortfolioCategories } from '@/app/lib/data';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -13,7 +14,11 @@ export default async function Portfolio() {
         <main className="min-h-screen bg-light">
             <Navbar />
 
-            <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="pt-28 pb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <Breadcrumbs />
+            </div>
+
+            <div className="pt-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-center text-dark mb-4">Portfolio</h1>
                 <p className="text-center text-gray-600 mb-16">Wybierz kategorię aby zobaczyć realizacje</p>
 

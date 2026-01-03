@@ -93,6 +93,9 @@ export default async function Home() {
       {/* 4. Recent Work */}
       <RecentWork />
 
+      {/* 5. Testimonials Section */}
+      <Testimonials />
+
       {/* 5. CTA Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-dark z-0">

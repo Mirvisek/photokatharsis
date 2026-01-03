@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next';
-import { getPortfolioCategories } from './lib/data';
+import { getPortfolioCategories, getOffers } from './lib/data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://katharsis.risegen.pl';
 
-    // Get all portfolio categories
+    // Get dynamic data
     const categories = await getPortfolioCategories();
+    const offers = await getOffers();
 
     // Static pages
     const staticPages = [
@@ -45,6 +46,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'monthly' as const,
             priority: 0.6,
         },
+        {
+            url: `${baseUrl}/polityka-prywatnosci`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly' as const,
+            priority: 0.3,
+        }
     ];
 
     // Dynamic category pages
@@ -55,5 +62,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
     }));
 
-    return [...staticPages, ...categoryPages];
+    // Offer anchors (Note: Search engines often ignore fragments, but it helps structure)
+    // We group by unique category to avoid spamming too many anchors if there are many items per category
+    const uniqueCategories = Array.from(new Set(offers.map(o => o.category.toLowerCase())));
+    const offerPages = uniqueCategories.map((cat) => ({
+        url: `${baseUrl}/oferta#${cat}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+    }));
+
+    return [...staticPages, ...categoryPages, ...offerPages];
 }

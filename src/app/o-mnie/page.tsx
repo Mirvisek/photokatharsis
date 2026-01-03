@@ -3,7 +3,8 @@ import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getSettings } from '@/app/lib/data';
-import AboutClient from '@/components/AboutClient'; // Separate animations
+import AboutClient from '@/components/AboutClient';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -32,7 +33,10 @@ export default async function About() {
     return (
         <main className="min-h-screen bg-white">
             <Navbar />
-            <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="pt-28 pb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <Breadcrumbs />
+            </div>
+            <div className="pt-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Content Section */}
                 <AboutClient content={content} imageUrl={imageUrl} clients={clients} />
             </div>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { Calendar } from 'lucide-react';
 
 export default function Rezerwacja() {
@@ -8,7 +9,11 @@ export default function Rezerwacja() {
         <main className="min-h-screen bg-white">
             <Navbar />
 
-            <div className="flex flex-col min-h-[80vh] items-center justify-center pt-20 px-4">
+            <div className="pt-28 pb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <Breadcrumbs />
+            </div>
+
+            <div className="flex flex-col min-h-[60vh] items-center justify-center pb-20 px-4">
                 <div className="bg-gray-50 p-12 rounded-3xl text-center max-w-2xl w-full shadow-xl border border-gray-100">
                     <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 text-primary">
                         <Calendar size={40} />

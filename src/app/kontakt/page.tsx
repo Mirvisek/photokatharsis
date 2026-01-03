@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer'; // Import async Server Component Footer
 import ContactFormWrapper from '@/components/ContactFormWrapper'; // Make separate client wrapper
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { Mail, Phone, MapPin, Facebook, Instagram } from 'lucide-react';
 import { getSettings } from '@/app/lib/data';
 
@@ -16,7 +17,11 @@ export default async function Kontakt() {
         <main className="min-h-screen bg-white">
             <Navbar />
 
-            <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="pt-28 pb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <Breadcrumbs />
+            </div>
+
+            <div className="pt-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
 
                     {/* Info Side */}

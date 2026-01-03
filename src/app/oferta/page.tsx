@@ -2,12 +2,15 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import OfferList from '@/components/OfferList';
-import { getOffers } from '@/app/lib/data';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import FAQList from '@/components/FAQList';
+import { getOffers, getFAQs } from '@/app/lib/data';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Oferta() {
     const allOffers = await getOffers();
+    const faqs = await getFAQs();
 
     // Group offers by category for easier consumption in Client Component
     const groupedOffers = {
@@ -19,11 +22,19 @@ export default async function Oferta() {
     return (
         <main className="min-h-screen bg-white">
             <Navbar />
-            <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div className="pt-28 pb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <Breadcrumbs />
+            </div>
+
+            <div className="pt-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-center text-primary mb-16">Oferta</h1>
 
                 <OfferList offers={groupedOffers} />
             </div>
+
+            <FAQList items={faqs} />
+
             <Footer />
         </main>
     );
