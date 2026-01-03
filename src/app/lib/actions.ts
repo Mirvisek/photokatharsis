@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
@@ -28,6 +28,10 @@ export async function authenticate(
     }
 
     redirect('/admin/dashboard');
+}
+
+export async function handleSignOut() {
+    await signOut({ redirectTo: '/admin/login' });
 }
 
 export async function createPortfolioItem(prevState: any, formData: FormData) {

@@ -1,67 +1,66 @@
+'use client';
 import Link from 'next/link';
-import { signOut } from '@/auth';
-import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, FolderOpen, BriefcaseBusiness } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, BriefcaseBusiness } from 'lucide-react';
+import { handleSignOut } from '@/app/lib/actions';
 
 export default function Sidebar() {
+    const pathname = usePathname();
+
+    const menuItems = [
+        { href: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+        { href: '/admin/portfolio', icon: Images, label: 'Portfolio' },
+        { href: '/admin/oferta', icon: ShoppingBag, label: 'Oferta' },
+        { href: '/admin/settings', icon: Settings, label: 'Ustawienia' },
+        { href: '/admin/clients', icon: BriefcaseBusiness, label: 'Zaufali mi' },
+        { href: '/admin/hero', icon: Images, label: 'Slider Hero' },
+    ];
+
     return (
-        <div className="w-64 bg-dark text-white min-h-screen flex flex-col p-4">
-            <div className="mb-8">
-                <h2 className="text-2xl font-bold">Admin Panel</h2>
+        <div className="w-72 bg-dark border-r border-white/5 min-h-screen flex flex-col p-6 shadow-2xl z-50">
+            {/* Logo Area */}
+            <div className="mb-12 flex items-center gap-3 px-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
+                    S
+                </div>
+                <div>
+                    <h2 className="text-xl font-bold text-white tracking-wide">Panel Admina</h2>
+                    <p className="text-xs text-gray-400">by RiseGen.pl</p>
+                </div>
             </div>
+
+            {/* Navigation */}
             <nav className="flex-1 space-y-2">
-                <Link
-                    href="/admin/dashboard"
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <LayoutDashboard size={20} />
-                    <span>Dashboard</span>
-                </Link>
-                <Link
-                    href="/admin/portfolio"
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <Images size={20} />
-                    <span>Portfolio</span>
-                </Link>
-                <Link
-                    href="/admin/oferta"
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <ShoppingBag size={20} />
-                    <span>Oferta</span>
-                </Link>
-                <Link
-                    href="/admin/settings"
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <Settings size={20} />
-                    <span>Ustawienia</span>
-                </Link>
-                <Link
-                    href="/admin/clients"
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <BriefcaseBusiness size={20} />
-                    <span>Zaufali mi</span>
-                </Link>
-                <Link
-                    href="/admin/hero"
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <Images size={20} />
-                    <span>Slider Hero</span>
-                </Link>
+                {menuItems.map((item) => {
+                    const isActive = pathname === item.href || (item.href !== '/admin/dashboard' && pathname.startsWith(item.href));
+                    return (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${isActive
+                                ? 'bg-gradient-to-r from-primary/20 to-transparent text-white border-l-4 border-primary shadow-inner'
+                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                }`}
+                        >
+                            <item.icon
+                                size={22}
+                                className={`transition-colors duration-300 ${isActive ? 'text-primary' : 'group-hover:text-white'}`}
+                            />
+                            <span className="font-medium tracking-wide">{item.label}</span>
+                        </Link>
+                    );
+                })}
             </nav>
-            <div className="mt-auto pt-4 border-t border-white/10">
-                <form
-                    action={async () => {
-                        'use server';
-                        await signOut({ redirectTo: '/admin/login' });
-                    }}
-                >
-                    <button type="submit" className="flex items-center space-x-3 px-4 py-3 w-full text-left rounded-lg hover:bg-red-500/20 text-red-300 transition-colors">
-                        <LogOut size={20} />
-                        <span>Wyloguj</span>
+
+            {/* Footer / Logout */}
+            <div className="mt-auto pt-8 border-t border-white/10">
+                <form action={handleSignOut}>
+                    <button
+                        type="submit"
+                        className="flex items-center space-x-3 px-4 py-3.5 w-full text-left rounded-xl hover:bg-red-500/10 text-gray-400 hover:text-red-400 transition-all duration-300 group"
+                    >
+                        <LogOut size={22} className="group-hover:translate-x-1 transition-transform" />
+                        <span className="font-medium">Wyloguj</span>
                     </button>
                 </form>
             </div>
