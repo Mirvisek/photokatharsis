@@ -14,7 +14,7 @@ export async function authenticate(
 ) {
     try {
         const data = Object.fromEntries(formData);
-        await signIn('credentials', { ...data, redirectTo: '/admin/dashboard' });
+        await signIn('credentials', { ...data, redirect: false });
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -26,6 +26,8 @@ export async function authenticate(
         }
         throw error;
     }
+
+    redirect('/admin/dashboard');
 }
 
 export async function createPortfolioItem(prevState: any, formData: FormData) {
