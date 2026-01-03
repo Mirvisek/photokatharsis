@@ -1,9 +1,6 @@
-
 import { PrismaClient } from '@prisma/client';
 import { deleteMessage, toggleMessageReadStatus } from '@/app/lib/actions';
 import { Mail, Trash2, CheckCircle, Circle, Clock } from 'lucide-react';
-import { format } from 'date-fns';
-import { pl } from 'date-fns/locale';
 
 const prisma = new PrismaClient();
 
@@ -66,7 +63,13 @@ export default async function MessagesPage() {
                                         </h3>
                                         <div className="flex items-center text-xs text-gray-400 gap-1">
                                             <Clock size={12} />
-                                            {format(msg.createdAt, "d MMM yyyy, HH:mm", { locale: pl })}
+                                            {new Date(msg.createdAt).toLocaleDateString('pl-PL', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            })}
                                         </div>
                                     </div>
 
