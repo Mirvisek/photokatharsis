@@ -87,23 +87,7 @@ export default function HeroCarouselClient({ slides }: { slides: Slide[] }) {
                 </motion.div>
             </AnimatePresence>
 
-            {/* Controls */}
-            {slides.length > 1 && (
-                <>
-                    <button
-                        onClick={prevSlide}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
-                    >
-                        <ChevronLeft size={32} />
-                    </button>
-                    <button
-                        onClick={nextSlide}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
-                    >
-                        <ChevronRight size={32} />
-                    </button>
-                </>
-            )}
+
         </div>
     );
 }

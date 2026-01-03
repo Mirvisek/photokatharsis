@@ -1,0 +1,10 @@
+# robots.txt for Photo Katharsis
+User-agent: *
+Allow: /
+
+# Disallow admin panel
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://katharsis.risegen.pl/sitemap.xml

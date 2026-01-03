@@ -76,3 +76,11 @@ model SiteSetting {
   group       String   // 'contact', 'social', 'about', 'home'
 }
 
+model TrustedClient {
+  id        String   @id @default(uuid())
+  name      String
+  logoUrl   String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+

@@ -225,3 +225,39 @@ export async function deleteHeroSlide(id: string) {
         throw new Error('Database Error: Failed to Delete Slide.');
     }
 }
+
+export async function createTrustedClient(prevState: any, formData: FormData) {
+    const name = formData.get('name') as string;
+    const logoUrl = formData.get('logoUrl') as string;
+
+    if (!name || !logoUrl) {
+        return { message: 'Missing required fields' };
+    }
+
+    try {
+        await prisma.trustedClient.create({
+            data: {
+                name,
+                logoUrl,
+            },
+        });
+    } catch (error) {
+        return { message: 'Database Error: Failed to Create Client.' };
+    }
+
+    revalidatePath('/o-mnie');
+    revalidatePath('/admin/clients');
+    redirect('/admin/clients');
+}
+
+export async function deleteTrustedClient(id: string) {
+    try {
+        await prisma.trustedClient.delete({
+            where: { id }
+        });
+        revalidatePath('/o-mnie');
+        revalidatePath('/admin/clients');
+    } catch (error) {
+        throw new Error('Database Error: Failed to Delete Client.');
+    }
+}

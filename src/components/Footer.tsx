@@ -1,5 +1,6 @@
 
 import Link from 'next/link';
+import { Facebook, Instagram, Music } from 'lucide-react';
 import { getSettings } from '@/app/lib/data';
 
 export default async function Footer() {
@@ -27,18 +28,33 @@ export default async function Footer() {
                     <div>
                         <h4 className="text-lg font-semibold text-white mb-4">Legalne</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-accent transition-colors">Polityka Prywatności</Link></li>
-                            <li><Link href="#" className="hover:text-accent transition-colors">Cookies</Link></li>
+                            <li><Link href="/polityka-prywatnosci" className="hover:text-accent transition-colors">Polityka Prywatności</Link></li>
+                            <li><Link href="/cookies" className="hover:text-accent transition-colors">Cookies</Link></li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
                     <p>&copy; {new Date().getFullYear()} {settings.site_title || 'Szymon'}. Wszelkie prawa zastrzeżone.</p>
-                    <div className="flex space-x-4 mt-4 md:mt-0">
-                        {settings.social_facebook && <a href={settings.social_facebook} className="hover:text-accent transition-colors">Facebook</a>}
-                        {settings.social_instagram && <a href={settings.social_instagram} className="hover:text-accent transition-colors">Instagram</a>}
-                        {settings.social_tiktok && <a href={settings.social_tiktok} className="hover:text-accent transition-colors">TikTok</a>}
+                    <div className="flex space-x-6 mt-4 md:mt-0">
+                        {settings.social_facebook && (
+                            <a href={settings.social_facebook} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
+                                <Facebook size={20} />
+                                <span className="sr-only">Facebook</span>
+                            </a>
+                        )}
+                        {settings.social_instagram && (
+                            <a href={settings.social_instagram} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
+                                <Instagram size={20} />
+                                <span className="sr-only">Instagram</span>
+                            </a>
+                        )}
+                        {settings.social_tiktok && (
+                            <a href={settings.social_tiktok} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
+                                <Music size={20} />
+                                <span className="sr-only">TikTok</span>
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>

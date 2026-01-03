@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-export default function AboutClient({ content, imageUrl }: { content: string, imageUrl: string }) {
+export default function AboutClient({ content, imageUrl, clients }: { content: string, imageUrl: string, clients: any[] }) {
     return (
         <>
             <div className="text-center mb-16">
@@ -44,6 +44,28 @@ export default function AboutClient({ content, imageUrl }: { content: string, im
                     dangerouslySetInnerHTML={{ __html: content }}
                 />
             </div>
+
+            {/* Trusted By Section */}
+            {clients.length > 0 && (
+                <div className="mt-32 border-t border-gray-100 pt-16">
+                    <div className="text-center mb-12">
+                        <span className="text-primary font-semibold tracking-wider uppercase text-sm">Współpraca</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-dark mt-2">Zaufali mi</h2>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                        {clients.map((client) => (
+                            <div key={client.id} className="w-full h-32 flex items-center justify-center p-4 bg-white hover:shadow-lg rounded-xl transition-all duration-300 group">
+                                <img
+                                    src={client.logoUrl}
+                                    alt={client.name}
+                                    className="max-h-full max-w-full object-contain filter group-hover:brightness-110"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </>
     );
 }

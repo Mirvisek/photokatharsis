@@ -1,11 +1,18 @@
 import Link from 'next/link';
+import { Camera, Palette, Rocket } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import HeroCarousel from '@/components/HeroCarousel';
 import RecentWork from '@/components/RecentWork';
 import Testimonials from '@/components/Testimonials';
 import Footer from '@/components/Footer';
 
-export default function Home() {
+import { getSettings } from '@/app/lib/data';
+
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const settings = await getSettings();
+
   return (
     <main className="min-h-screen bg-light">
       <Navbar />
@@ -17,12 +24,14 @@ export default function Home() {
       <section className="relative z-10 py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: 'Fotografia', desc: 'Emocje uchwycone w kadrze. Sesje biznesowe, produktowe i lifestyle.', icon: '📸' },
-            { title: 'Grafika', desc: 'Projekty, które sprzedają. Branding, social media, print.', icon: '🎨' },
-            { title: 'Marketing', desc: 'Strategie, które działają. Social media, ads, copywriting.', icon: '🚀' },
+            { title: 'Fotografia', desc: settings.service_fotografia_desc || 'Emocje uchwycone w kadrze. Sesje biznesowe, produktowe i lifestyle.', Icon: Camera },
+            { title: 'Grafika', desc: settings.service_grafika_desc || 'Projekty, które sprzedają. Branding, social media, print.', Icon: Palette },
+            { title: 'Marketing', desc: settings.service_marketing_desc || 'Strategie, które działają. Social media, ads, copywriting.', Icon: Rocket },
           ].map((service, i) => (
             <div key={i} className="glass bg-white/60 p-8 rounded-3xl shadow-glass hover:transform hover:-translate-y-2 transition-all duration-300">
-              <div className="text-4xl mb-4">{service.icon}</div>
+              <div className="text-primary mb-4">
+                <service.Icon size={48} />
+              </div>
               <h3 className="text-2xl font-bold text-dark mb-2">{service.title}</h3>
               <p className="text-gray-600 mb-6">{service.desc}</p>
               <Link href={`/oferta#${service.title.toLowerCase()}`} className="text-primary font-semibold hover:text-dark transition-colors flex items-center">
@@ -53,11 +62,14 @@ export default function Home() {
           <div>
             <span className="text-primary font-semibold tracking-wider uppercase text-sm">O mnie</span>
             <h2 className="text-5xl lg:text-6xl font-bold text-dark mt-2 mb-8 tracking-tight">
-              Tworzę wizerunek,<br /> który <span className="text-primary">działa.</span>
+              {settings.home_about_heading ? (
+                <span dangerouslySetInnerHTML={{ __html: settings.home_about_heading.replace(/\n/g, '<br/>') }} />
+              ) : (
+                <>Tworzę wizerunek,<br /> który <span className="text-primary">działa.</span></>
+              )}
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Cześć! Jestem Szymon. Łączę świat fotografii, designu i marketingu, aby pomagać markom opowiadać ich historie.
-              Wierzę w minimalizm, autentyczność i siłę dobrego designu.
+              {settings.home_about_text || 'Cześć! Jestem Szymon. Łączę świat fotografii, designu i marketingu, aby pomagać markom opowiadać ich historie. Wierzę w minimalizm, autentyczność i siłę dobrego designu.'}
             </p>
 
             <div className="flex gap-4">

@@ -4,11 +4,17 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getSettings } from '@/app/lib/data';
 import AboutClient from '@/components/AboutClient'; // Separate animations
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const dynamic = 'force-dynamic';
 
 export default async function About() {
     const settings = await getSettings();
+    const clients = await prisma.trustedClient.findMany({
+        orderBy: { order: 'asc' },
+    });
 
     // Default content if not set
     const content = settings.about_content || `
@@ -28,7 +34,7 @@ export default async function About() {
             <Navbar />
             <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Content Section */}
-                <AboutClient content={content} imageUrl={imageUrl} />
+                <AboutClient content={content} imageUrl={imageUrl} clients={clients} />
             </div>
             <Footer />
         </main>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { signOut } from '@/auth';
-import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, FolderOpen } from 'lucide-react';
+import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, FolderOpen, BriefcaseBusiness } from 'lucide-react';
 
 export default function Sidebar() {
     return (
@@ -36,6 +36,13 @@ export default function Sidebar() {
                 >
                     <Settings size={20} />
                     <span>Ustawienia</span>
+                </Link>
+                <Link
+                    href="/admin/clients"
+                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors"
+                >
+                    <BriefcaseBusiness size={20} />
+                    <span>Zaufali mi</span>
                 </Link>
                 <Link
                     href="/admin/hero"

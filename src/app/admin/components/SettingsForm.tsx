@@ -11,6 +11,8 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
     // Local state for complex inputs to sync with hidden fields
     const [aboutContent, setAboutContent] = useState(settings.about_content || '');
     const [aboutImage, setAboutImage] = useState(settings.about_image || '');
+    const [privacyContent, setPrivacyContent] = useState(settings.policy_privacy_content || '');
+    const [cookiesContent, setCookiesContent] = useState(settings.policy_cookies_content || '');
 
     return (
         <form action={formAction} className="space-y-12">
@@ -78,6 +80,63 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
                     <div>
                         <label className="block text-sm font-medium text-gray-700">TikTok URL</label>
                         <input type="text" name="social_tiktok" defaultValue={settings.social_tiktok} className="mt-1 block w-full px-3 py-2 border rounded-md" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Sekcja Strona Główna - Teksty */}
+            <div>
+                <h2 className="text-xl font-bold text-dark mb-4 border-b pb-2">Strona Główna - Teksty</h2>
+                <div className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Nagłówek sekcji "O mnie"</label>
+                        <input type="text" name="home_about_heading" defaultValue={settings.home_about_heading || 'Tworzę wizerunek, który działa.'} className="mt-1 block w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Podtytuł sekcji "O mnie"</label>
+                        <textarea name="home_about_text" rows={4} defaultValue={settings.home_about_text || 'Cześć! Jestem Szymon. Łączę świat fotografii, designu i marketingu...'} className="mt-1 block w-full px-3 py-2 border rounded-md" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Sekcja Strona Główna - Usługi */}
+            <div>
+                <h2 className="text-xl font-bold text-dark mb-4 border-b pb-2">Strona Główna - Opisy Usług</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label className="block text-sm font-bold text-primary mb-1">Fotografia</label>
+                        <textarea name="service_fotografia_desc" rows={3} defaultValue={settings.service_fotografia_desc || 'Emocje uchwycone w kadrze. Sesje biznesowe, produktowe i lifestyle.'} className="mt-1 block w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-bold text-primary mb-1">Grafika</label>
+                        <textarea name="service_grafika_desc" rows={3} defaultValue={settings.service_grafika_desc || 'Projekty, które sprzedają. Branding, social media, print.'} className="mt-1 block w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-bold text-primary mb-1">Marketing</label>
+                        <textarea name="service_marketing_desc" rows={3} defaultValue={settings.service_marketing_desc || 'Strategie, które działają. Social media, ads, copywriting.'} className="mt-1 block w-full px-3 py-2 border rounded-md" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Sekcja Polityka i Prawne */}
+            <div>
+                <h2 className="text-xl font-bold text-dark mb-4 border-b pb-2">Polityka i Prawne</h2>
+                <div className="space-y-8">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Polityka Prywatności</label>
+                        <RichTextEditor
+                            value={privacyContent}
+                            onChange={setPrivacyContent}
+                        />
+                        <input type="hidden" name="policy_privacy_content" value={privacyContent} />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Polityka Cookies</label>
+                        <RichTextEditor
+                            value={cookiesContent}
+                            onChange={setCookiesContent}
+                        />
+                        <input type="hidden" name="policy_cookies_content" value={cookiesContent} />
                     </div>
                 </div>
             </div>
