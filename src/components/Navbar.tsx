@@ -5,17 +5,15 @@ import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const navLinks = [
+type NavLink = {
+    name: string;
+    href: string;
+    submenu?: { name: string; href: string }[];
+};
+
+const navLinks: NavLink[] = [
     { name: 'Strona główna', href: '/' },
-    {
-        name: 'Oferta',
-        href: '/oferta',
-        submenu: [
-            { name: 'Fotografia', href: '/oferta#fotografia' },
-            { name: 'Grafika', href: '/oferta#grafika' },
-            { name: 'Marketing', href: '/oferta#marketing' },
-        ],
-    },
+    { name: 'Oferta', href: '/oferta' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Rezerwacja', href: '/rezerwacja' },
     { name: 'O mnie', href: '/o-mnie' },

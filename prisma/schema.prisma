@@ -55,6 +55,34 @@ model OfferServices {
   description String
   price       String
   features    String // JSON string or comma separated
+  duration    String?
+  imageUrl    String?
+  questions   String? // JSON string (array of strings)
+  reservations Reservation[]
+}
+
+model DiscountCode {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  type      String   // 'percent' or 'amount'
+  value     Int
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Reservation {
+  id             String        @id @default(uuid())
+  offerId        String
+  offer          OfferServices @relation(fields: [offerId], references: [id])
+  date           DateTime
+  clientName     String
+  clientEmail    String
+  clientPhone    String
+  status         String        @default("pending") // pending, confirmed, cancelled
+  answers        String?       // JSON string of Q&A
+  discountCodeId String?
+  totalPrice     String?
+  createdAt      DateTime      @default(now())
 }
 
 model HeroSlide {

@@ -154,6 +154,16 @@ export async function createOffer(prevState: any, formData: FormData) {
     const description = formData.get('description') as string;
     const price = formData.get('price') as string;
     const features = formData.get('features') as string;
+    const duration = formData.get('duration') as string;
+    const imageUrl = formData.get('imageUrl') as string;
+    // We will assume questions are passed as a newline-separated string for simplicity in the basic form
+    const questionsRaw = formData.get('questions') as string;
+
+    let questionsJson = '[]';
+    if (questionsRaw) {
+        const questionsList = questionsRaw.split('\n').map(q => q.trim()).filter(q => q.length > 0);
+        questionsJson = JSON.stringify(questionsList);
+    }
 
     if (!category || !title || !description || !price) {
         return { message: 'Missing required fields' };
@@ -167,10 +177,56 @@ export async function createOffer(prevState: any, formData: FormData) {
                 description,
                 price,
                 features: features || '',
+                duration,
+                imageUrl,
+                questions: questionsJson
             },
         });
     } catch (error) {
         return { message: 'Database Error: Failed to Create Offer.' };
+    }
+
+    revalidatePath('/oferta');
+    revalidatePath('/admin/oferta');
+    redirect('/admin/oferta');
+}
+
+export async function updateOffer(id: string, prevState: any, formData: FormData) {
+    const category = formData.get('category') as string;
+    const title = formData.get('title') as string;
+    const description = formData.get('description') as string;
+    const price = formData.get('price') as string;
+    const features = formData.get('features') as string;
+    const duration = formData.get('duration') as string;
+    const imageUrl = formData.get('imageUrl') as string;
+    const questionsRaw = formData.get('questions') as string;
+
+    let questionsJson = '[]';
+    if (questionsRaw) {
+        const questionsList = questionsRaw.split('\n').map(q => q.trim()).filter(q => q.length > 0);
+        questionsJson = JSON.stringify(questionsList);
+    }
+
+    if (!title || !price) {
+        return { message: 'Missing required fields' };
+    }
+
+    try {
+        await prisma.offerServices.update({
+            where: { id },
+            data: {
+                category,
+                title,
+                description,
+                price,
+                features: features || '',
+                duration,
+                imageUrl,
+                questions: questionsJson
+            }
+        });
+    } catch (error) {
+        return { message: 'Database Error: Failed to Update Offer.' };
     }
 
     revalidatePath('/oferta');

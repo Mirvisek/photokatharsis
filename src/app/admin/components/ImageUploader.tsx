@@ -64,7 +64,7 @@ export default function ImageUploader({
     return (
         <div className="space-y-4">
             <div
-                className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-colors ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary'
+                className={`relative rounded-xl p-8 text-center transition-colors ${dragActive ? 'bg-primary/5' : 'hover:bg-gray-50'
                     }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -75,7 +75,7 @@ export default function ImageUploader({
                     type="file"
                     onChange={handleChange}
                     accept="image/*"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                 />
 
                 {uploading ? (
@@ -102,10 +102,13 @@ export default function ImageUploader({
                         <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
                             <ImageIcon className="text-primary" size={24} />
                         </div>
-                        <p className="text-sm font-medium text-gray-900">
-                            Kliknij lub przeciągnij zdjęcie
+                        <p className="text-sm font-medium text-gray-900 mb-2">
+                            Przeciągnij zdjęcie tutaj
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <div className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            Wybierz plik z dysku
+                        </div>
+                        <p className="text-xs text-gray-500 mt-3">
                             PNG, JPG, WEBP do 5MB
                         </p>
                     </div>

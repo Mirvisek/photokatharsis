@@ -1,11 +1,20 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { getPortfolioCategories } from '@/app/lib/data';
+import { getPortfolioCategories, getSettings } from '@/app/lib/data';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const settings = await getSettings();
+    return {
+        title: settings.seo_portfolio_title || 'Portfolio | Szymon',
+        description: settings.seo_portfolio_desc || 'Zobacz moje realizacje.',
+    };
+}
 
 export default async function Portfolio() {
     const categories = await getPortfolioCategories();

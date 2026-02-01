@@ -50,7 +50,18 @@ export async function getOffers() {
         return items;
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch offers.');
+    }
+}
+
+export async function getOfferById(id: string) {
+    try {
+        const item = await prisma.offerServices.findUnique({
+            where: { id },
+        });
+        return item;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return null; // Return null instead of throwing for smoother handling
     }
 }
 

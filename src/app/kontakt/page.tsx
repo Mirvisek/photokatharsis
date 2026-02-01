@@ -6,9 +6,18 @@ import ContactFormWrapper from '@/components/ContactFormWrapper'; // Make separa
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Mail, Phone, MapPin, Facebook, Instagram } from 'lucide-react';
 import { getSettings } from '@/app/lib/data';
+import { Metadata } from 'next';
 
 // Since this is a Server Component page, we can fetch data directly
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const settings = await getSettings();
+    return {
+        title: settings.seo_contact_title || 'Kontakt | Szymon',
+        description: settings.seo_contact_desc || 'Skontaktuj się ze mną.',
+    };
+}
 
 export default async function Kontakt() {
     const settings = await getSettings();

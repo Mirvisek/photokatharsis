@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check } from 'lucide-react';
 import Link from 'next/link';
@@ -23,13 +23,15 @@ export default function OfferList({ offers }: { offers: GroupedOffers }) {
     const [activeCategory, setActiveCategory] = useState<string>('fotografia');
 
     // Handle hash navigation on mount
-    const { hash } = window.location;
-    if (hash) {
-        const category = hash.replace('#', '');
-        if (['fotografia', 'grafika', 'marketing'].includes(category) && activeCategory !== category) {
-            setActiveCategory(category);
+    useEffect(() => {
+        const { hash } = window.location;
+        if (hash) {
+            const category = hash.replace('#', '');
+            if (['fotografia', 'grafika', 'marketing'].includes(category)) {
+                setActiveCategory(category);
+            }
         }
-    }
+    }, []);
 
     return (
         <div className="space-y-8">
@@ -79,10 +81,10 @@ export default function OfferList({ offers }: { offers: GroupedOffers }) {
                                     </ul>
 
                                     <Link
-                                        href="/kontakt?subject=Fotografia"
-                                        className="w-full block text-center bg-dark text-white py-3 rounded-lg font-semibold hover:bg-primary transition-colors"
+                                        href="/rezerwacja"
+                                        className="w-full block text-center bg-dark text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
                                     >
-                                        Zarezerwuj
+                                        Zarezerwuj teraz
                                     </Link>
                                 </div>
                             ))}

@@ -1,11 +1,14 @@
 
 import Link from 'next/link';
 import { getOffers } from '@/app/lib/data';
+import { getDiscountCodes } from '@/app/lib/discount-actions';
 import { deleteOffer } from '@/app/lib/actions';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Pencil } from 'lucide-react';
+import DiscountCodesManager from '../../components/DiscountCodesManager';
 
 export default async function AdminOfferPage() {
-    const items = await getOffers();
+    const items = await getOffers() || [];
+    const discountCodes = await getDiscountCodes();
 
     return (
         <div>
@@ -45,11 +48,16 @@ export default async function AdminOfferPage() {
                                     {item.price}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <form action={deleteOffer.bind(null, item.id)}>
-                                        <button type="submit" className="text-red-600 hover:text-red-900">
-                                            <Trash2 size={18} />
-                                        </button>
-                                    </form>
+                                    <div className="flex items-center justify-end space-x-3">
+                                        <Link href={`/admin/oferta/${item.id}/edit`} className="text-blue-600 hover:text-blue-900">
+                                            <Pencil size={18} />
+                                        </Link>
+                                        <form action={deleteOffer.bind(null, item.id)}>
+                                            <button type="submit" className="text-red-600 hover:text-red-900">
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -60,6 +68,10 @@ export default async function AdminOfferPage() {
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 max-w-4xl mt-12">
+                <DiscountCodesManager codes={discountCodes} />
             </div>
         </div>
     );

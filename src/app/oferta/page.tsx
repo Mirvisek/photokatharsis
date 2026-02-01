@@ -4,9 +4,18 @@ import Footer from '@/components/Footer';
 import OfferList from '@/components/OfferList';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQList from '@/components/FAQList';
-import { getOffers, getFAQs } from '@/app/lib/data';
+import { getOffers, getFAQs, getSettings } from '@/app/lib/data';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const settings = await getSettings();
+    return {
+        title: settings.seo_offer_title || 'Oferta | Szymon',
+        description: settings.seo_offer_desc || 'Zapoznaj się z moją ofertą.',
+    };
+}
 
 export default async function Oferta() {
     const allOffers = await getOffers();

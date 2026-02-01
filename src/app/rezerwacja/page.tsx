@@ -1,10 +1,24 @@
-import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { Calendar } from 'lucide-react';
+import ReservationWizard from '@/components/ReservationWizard';
+import { getOffersForReservation } from '@/app/lib/reservation-actions';
+import { getSettings } from '@/app/lib/data';
+import { Metadata } from 'next';
 
-export default function Rezerwacja() {
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const settings = await getSettings();
+    return {
+        title: settings.seo_title ? `Rezerwacja | ${settings.seo_title}` : 'Rezerwacja terminu | Szymon',
+        description: 'Zarezerwuj termin sesji fotograficznej lub konsultacji marketingowej online.',
+    };
+}
+
+export default async function Rezerwacja() {
+    const offers = await getOffersForReservation();
+
     return (
         <main className="min-h-screen bg-white">
             <Navbar />
@@ -13,30 +27,13 @@ export default function Rezerwacja() {
                 <Breadcrumbs />
             </div>
 
-            <div className="flex flex-col min-h-[60vh] items-center justify-center pb-20 px-4">
-                <div className="bg-gray-50 p-12 rounded-3xl text-center max-w-2xl w-full shadow-xl border border-gray-100">
-                    <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 text-primary">
-                        <Calendar size={40} />
-                    </div>
-                    <h1 className="text-4xl font-bold text-primary mb-6">Rezerwacja Online</h1>
-                    <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-                        Szybko i wygodnie zarezerwuj termin sesji lub spotkania.
-                        Skorzystaj z naszego zewnętrznego systemu rezerwacji.
-                    </p>
-
-                    <a
-                        href="https://photokatharsis.mafelo.net/pl"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block bg-primary hover:bg-dark text-white text-lg font-bold py-4 px-12 rounded-full shadow-lg shadow-primary/30 transition-all transform hover:scale-105"
-                    >
-                        Przejdź do kalendarza
-                    </a>
-
-                    <p className="mt-8 text-sm text-gray-400">
-                        Zostaniesz przekierowany do systemu Mafelo/Booksy itp.
-                    </p>
+            <div className="pt-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Zarezerwuj termin</h1>
+                    <p className="text-xl text-gray-600">Wybierz interesującą Cię usługę i znajdź dogodny termin.</p>
                 </div>
+
+                <ReservationWizard offers={offers} />
             </div>
 
             <Footer />

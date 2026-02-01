@@ -53,7 +53,7 @@ export default function AboutClient({ content, imageUrl, clients }: { content: s
                         <h2 className="text-3xl md:text-4xl font-bold text-dark mt-2">Zaufali mi</h2>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
                         {clients.map((client) => (
                             <div key={client.id} className="w-full h-32 flex items-center justify-center p-4 bg-white hover:shadow-lg rounded-xl transition-all duration-300 group">
                                 <img
