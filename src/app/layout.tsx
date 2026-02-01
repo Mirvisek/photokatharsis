@@ -5,6 +5,7 @@ import './globals.css';
 import { getSiteSettings } from '@/app/lib/data';
 import { auth } from '@/auth';
 import SystemWrapper from '@/components/SystemWrapper';
+import PWAInstall from '@/components/PWAInstall';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -17,6 +18,13 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: settings.site_title || 'Szymon - Fotografia, Grafika, Marketing',
     description: settings.site_description || 'Profesjonalne usługi: Fotografia, Grafika, Marketing.',
+    manifest: '/manifest.json',
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: 'Szymon Portfolio',
+    },
+    themeColor: '#E63946',
   };
 }
 
@@ -51,6 +59,7 @@ export default async function RootLayout({
         <SystemWrapper settings={settings} isAdmin={isAdmin}>
           {children}
         </SystemWrapper>
+        <PWAInstall />
       </body>
     </html>
   );

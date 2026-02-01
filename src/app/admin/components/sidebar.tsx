@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, BriefcaseBusiness, User, MessageSquare, FileQuestion } from 'lucide-react';
+import { LayoutDashboard, Images, ShoppingBag, LogOut, Settings, BriefcaseBusiness, User, MessageSquare, FileQuestion, BarChart } from 'lucide-react';
 import { handleSignOut } from '@/app/lib/actions';
 
 export default function Sidebar() {
@@ -9,6 +9,7 @@ export default function Sidebar() {
 
     const menuItems = [
         { href: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+        { href: '/admin/analytics', icon: BarChart, label: 'Statystyki' },
         { href: '/admin/portfolio', icon: Images, label: 'Portfolio' },
         { href: '/admin/oferta', icon: ShoppingBag, label: 'Oferta' },
         { href: '/admin/settings', icon: Settings, label: 'Ustawienia' },
