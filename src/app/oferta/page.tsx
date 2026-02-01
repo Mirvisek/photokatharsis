@@ -23,9 +23,9 @@ export default async function Oferta() {
 
     // Group offers by category for easier consumption in Client Component
     const groupedOffers = {
-        fotografia: allOffers.filter(o => o.category === 'fotografia'),
-        grafika: allOffers.filter(o => o.category === 'grafika'),
-        marketing: allOffers.filter(o => o.category === 'marketing'),
+        fotografia: (allOffers || []).filter(o => o.category === 'fotografia'),
+        grafika: (allOffers || []).filter(o => o.category === 'grafika'),
+        marketing: (allOffers || []).filter(o => o.category === 'marketing'),
     };
 
     return (

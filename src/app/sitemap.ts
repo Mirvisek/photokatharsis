@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Offer anchors (Note: Search engines often ignore fragments, but it helps structure)
     // We group by unique category to avoid spamming too many anchors if there are many items per category
-    const uniqueCategories = Array.from(new Set(offers.map(o => o.category.toLowerCase())));
+    const uniqueCategories = Array.from(new Set((offers || []).map(o => o.category.toLowerCase())));
     const offerPages = uniqueCategories.map((cat) => ({
         url: `${baseUrl}/oferta#${cat}`,
         lastModified: new Date(),
